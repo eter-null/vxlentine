@@ -1,20 +1,21 @@
-// State
 let noDodgeCount = 0;
 let musicPlaying = false;
+let proximityCheck = null;
 
 const noTexts = [
-    "no... (´-ω-`)",
-    "u sure? (´• ω •`)",
-    "but why tho (´･ᴗ･ ` )",
-    "pls reconsider (｡•́︿•̀｡)",
-    "think about it!! (◕‿◕)",
-    "pretty pls? (´｡• ᵕ •｡`)",
-    "i'll be sad (╥﹏╥)",
-    "last chance!!! ( ˘⌣˘)♡",
-    "okay fine... YES! ヽ(♡‿♡)ノ"
+    "no",
+    "nope",
+    "u sure?",
+    "really?",
+    "pls no",
+    "think again",
+    "pretty pls?",
+    "ill be sad",
+    "maybe later?",
+    "last chance",
+    "ok fine... yes!!"
 ];
 
-// Elements
 const yesBtn = document.getElementById('yesBtn');
 const noBtn = document.getElementById('noBtn');
 const hintText = document.getElementById('hintText');
@@ -26,7 +27,6 @@ const vinyl = document.getElementById('vinyl');
 const tonearm = document.getElementById('tonearm');
 const nowPlayingLyric = document.getElementById('nowPlayingLyric');
 
-// LRC embedded - parse into { time (seconds), text } for Spotify-style sync
 const lrcRaw = `[00:11.08]Valentine, where did you go?
 [00:16.23]Ive been fiending for a minute
 [00:18.02]No i dont need forgiveness
@@ -89,29 +89,22 @@ function parseLrc(raw) {
     for (const line of lines) {
         const m = line.match(tag);
         if (m) {
-            const min = parseInt(m[1], 10);
-            const sec = parseInt(m[2], 10);
-            const cent = parseInt(m[3], 10);
-            const time = min * 60 + sec + cent / 100;
+            const time = parseInt(m[1], 10) * 60 + parseInt(m[2], 10) + parseInt(m[3], 10) / 100;
             const text = m[4].trim();
             if (text) result.push({ time, text });
         }
     }
     return result;
 }
-
 const lrcLines = parseLrc(lrcRaw);
 
-function updateSyncedLyrics(currentTime) {
-    let activeIndex = -1;
-    for (let i = lrcLines.length - 1; i >= 0; i--) {
-        if (currentTime >= lrcLines[i].time) {
-            activeIndex = i;
-            break;
-        }
+function updateSyncedLyrics(t) {
+    let i = -1;
+    for (let j = lrcLines.length - 1; j >= 0; j--) {
+        if (t >= lrcLines[j].time) { i = j; break; }
     }
-    if (activeIndex >= 0) {
-        nowPlayingLyric.textContent = lrcLines[activeIndex].text;
+    if (i >= 0) {
+        nowPlayingLyric.textContent = lrcLines[i].text;
         nowPlayingLyric.classList.add('has-lyric');
     } else {
         nowPlayingLyric.textContent = '♪';
@@ -119,7 +112,6 @@ function updateSyncedLyrics(currentTime) {
     }
 }
 
-// Music controls
 playPauseBtn.addEventListener('click', () => {
     if (musicPlaying) {
         bgMusic.pause();
@@ -133,195 +125,172 @@ playPauseBtn.addEventListener('click', () => {
         musicPlaying = true;
     }
 });
+bgMusic.addEventListener('timeupdate', () => updateSyncedLyrics(bgMusic.currentTime));
+bgMusic.addEventListener('play', () => vinyl.classList.add('spinning'));
+bgMusic.addEventListener('pause', () => vinyl.classList.remove('spinning'));
 
-bgMusic.addEventListener('timeupdate', () => {
-    updateSyncedLyrics(bgMusic.currentTime);
-});
-
-bgMusic.addEventListener('play', () => {
-    vinyl.classList.add('spinning');
-    tonearm.classList.add('playing');
-    setTimeout(() => tonearm.classList.remove('playing'), 500);
-});
-
-bgMusic.addEventListener('pause', () => {
-    vinyl.classList.remove('spinning');
-});
-
-
-// Auto play on first interaction
-let firstClick = true;
-document.addEventListener('click', () => {
-    if (firstClick) {
-        firstClick = false;
-        bgMusic.play().catch(() => {});
-        playPauseBtn.textContent = '❚❚';
-        vinyl.classList.add('spinning');
-        musicPlaying = true;
+function tryAutoplay() {
+    if (musicPlaying) return;
+    const p = bgMusic.play();
+    if (p && typeof p.then === 'function') {
+        p.then(() => {
+            musicPlaying = true;
+            playPauseBtn.textContent = '❚❚';
+            vinyl.classList.add('spinning');
+        }).catch(() => {});
     }
-}, { once: true });
+}
+tryAutoplay();
+document.addEventListener('DOMContentLoaded', tryAutoplay);
+window.addEventListener('load', tryAutoplay);
+document.addEventListener('click', () => { if (!musicPlaying) tryAutoplay(); }, { once: true });
+document.addEventListener('touchstart', () => { if (!musicPlaying) tryAutoplay(); }, { once: true });
 
-// Yes button - trigger celebration
 yesBtn.addEventListener('click', () => {
-    // Create confetti
-    createConfetti();
-    
-    // Show success page
+    const container = document.getElementById('confettiCanvas');
+    const colors = ['#ff69b4', '#ffb6c1', '#ffc0cb', '#dda0dd'];
+    for (let i = 0; i < 60; i++) {
+        const d = document.createElement('div');
+        d.className = 'confetti-piece';
+        d.style.left = Math.random() * 100 + '%';
+        d.style.background = colors[Math.floor(Math.random() * colors.length)];
+        d.style.animationDuration = (Math.random() * 1.5 + 1.5) + 's';
+        d.style.animationDelay = Math.random() * 0.3 + 's';
+        if (Math.random() > 0.5) d.style.borderRadius = '50%';
+        container.appendChild(d);
+        setTimeout(() => d.remove(), 3000);
+    }
     setTimeout(() => {
         successPage.classList.add('show');
-        
-        // More confetti bursts
-        setTimeout(() => createConfetti(), 500);
-        setTimeout(() => createConfetti(), 1000);
-        setTimeout(() => createConfetti(), 1500);
-    }, 300);
+        setTimeout(() => {
+            for (let i = 0; i < 40; i++) {
+                const d = document.createElement('div');
+                d.className = 'confetti-piece';
+                d.style.left = Math.random() * 100 + '%';
+                d.style.background = colors[Math.floor(Math.random() * colors.length)];
+                d.style.animationDuration = (Math.random() * 1.5 + 1.5) + 's';
+                container.appendChild(d);
+                setTimeout(() => d.remove(), 3000);
+            }
+        }, 300);
+    }, 400);
 });
 
-// No button - dodge behavior
-noBtn.addEventListener('mouseenter', dodgeButton);
-noBtn.addEventListener('click', dodgeButton);
-noBtn.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    dodgeButton();
-});
+const PROXIMITY = 65;
+const MOVE_INTERVAL = 120;
+
+function getPointerPos(e) {
+    if (e.touches && e.touches.length) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    return { x: e.clientX, y: e.clientY };
+}
+
+function distance(a, b) {
+    return Math.hypot(a.x - b.x, a.y - b.y);
+}
+
+function moveNoButton() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const rect = noBtn.getBoundingClientRect();
+    const pad = 16;
+    const maxX = vw - rect.width - pad;
+    const maxY = vh - rect.height - pad;
+    let x = Math.random() * maxX;
+    let y = Math.random() * maxY;
+    const yesRect = yesBtn.getBoundingClientRect();
+    const yesC = { x: yesRect.left + yesRect.width / 2, y: yesRect.top + yesRect.height / 2 };
+    for (let k = 0; k < 15; k++) {
+        const noC = { x: x + rect.width / 2, y: y + rect.height / 2 };
+        if (distance(noC, yesC) > 140) break;
+        x = Math.random() * maxX;
+        y = Math.random() * maxY;
+    }
+    noBtn.style.position = 'fixed';
+    noBtn.style.left = x + 'px';
+    noBtn.style.top = y + 'px';
+}
+
+function checkProximity(e) {
+    const pos = getPointerPos(e);
+    const rect = noBtn.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    if (distance(pos, { x: cx, y: cy }) < PROXIMITY) {
+        dodgeButton();
+        moveNoButton();
+    }
+}
 
 function dodgeButton() {
     noDodgeCount++;
-    
-    // Change text
     if (noDodgeCount < noTexts.length) {
         noBtn.textContent = noTexts[noDodgeCount];
-        
-        // Make yes button bigger
-        const yesScale = 1 + (noDodgeCount * 0.08);
-        yesBtn.style.transform = `scale(${yesScale})`;
-        
-        // Make no button smaller
-        const noScale = 1 - (noDodgeCount * 0.08);
-        if (noScale > 0.3) {
-            noBtn.style.transform = `scale(${noScale})`;
-        }
-        
-        // Move to random position
-        moveButton();
-        
-        // Update hint
-        updateHint();
+        const scale = Math.max(0.25, 1 - noDodgeCount * 0.12);
+        noBtn.style.transform = 'scale(' + scale + ')';
+        moveNoButton();
+        const hints = [
+            '(the no button is shy...)',
+            '(it moved!!)',
+            '(getting smaller...)',
+            '(just say yes!!)',
+            '(yes is right there)',
+            '(please??)',
+            '(one more try)'
+        ];
+        hintText.textContent = hints[Math.min(noDodgeCount, hints.length - 1)];
     } else {
-        // Convert to yes button
-        noBtn.textContent = "YES!! ヽ(♡‿♡)ノ";
-        noBtn.style.background = 'linear-gradient(135deg, #FF69B4, #FFB6C1)';
-        noBtn.style.color = 'white';
-        noBtn.style.borderColor = '#FF1493';
+        noBtn.textContent = 'yes!!';
+        noBtn.style.background = 'linear-gradient(180deg, #ff85b0, #ff69b4)';
+        noBtn.style.color = '#fff';
+        noBtn.style.borderColor = '#d44d7a';
+        noBtn.style.transform = 'scale(1)';
         noBtn.removeEventListener('mouseenter', dodgeButton);
         noBtn.onclick = () => yesBtn.click();
-    }
-}
-
-function moveButton() {
-    // Get viewport dimensions
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-    
-    // Get button dimensions
-    const btnRect = noBtn.getBoundingClientRect();
-    const btnWidth = btnRect.width;
-    const btnHeight = btnRect.height;
-    
-    // Calculate safe area (with padding)
-    const padding = 20;
-    const maxX = vw - btnWidth - padding;
-    const maxY = vh - btnHeight - padding;
-    
-    // Generate random position
-    let randomX = Math.random() * maxX;
-    let randomY = Math.random() * maxY;
-    
-    // Make sure it's not too close to yes button
-    const yesRect = yesBtn.getBoundingClientRect();
-    const minDistance = 150;
-    
-    let attempts = 0;
-    while (attempts < 10) {
-        const distance = Math.sqrt(
-            Math.pow(randomX - yesRect.left, 2) + 
-            Math.pow(randomY - yesRect.top, 2)
-        );
-        
-        if (distance > minDistance) break;
-        
-        randomX = Math.random() * maxX;
-        randomY = Math.random() * maxY;
-        attempts++;
-    }
-    
-    // Apply position
-    noBtn.style.position = 'fixed';
-    noBtn.style.left = randomX + 'px';
-    noBtn.style.top = randomY + 'px';
-    noBtn.style.transition = 'all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-}
-
-function updateHint() {
-    const hints = [
-        "*psst... the no button is kinda shy* (￢‿￢ )",
-        "*oops it moved hehe* (´｡• ᵕ •｡`)",
-        "*it's getting smaller too...* (¬‿¬ )",
-        "*why won't u just say yes?* (◕‿◕)",
-        "*the yes button is looking pretty good rn* (⌒▽⌒)☆",
-        "*just click yes already!!* ♡( ◡‿◡ )",
-        "*ur making this harder than it needs to be* (￣ω￣)",
-        "*okay u got this, one more try* (´ ω `*)"
-    ];
-    
-    if (noDodgeCount < hints.length) {
-        hintText.textContent = hints[noDodgeCount];
-        hintText.style.animation = 'none';
-        setTimeout(() => {
-            hintText.style.animation = 'wiggle 1s ease-in-out';
-        }, 10);
-    }
-}
-
-// Confetti function
-function createConfetti() {
-    const colors = ['#FF69B4', '#FFB6C1', '#FFE4E1', '#DDA0DD', '#E6E6FA', '#FFC0CB'];
-    const container = document.getElementById('confettiCanvas');
-    
-    for (let i = 0; i < 50; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti-piece';
-        confetti.style.left = Math.random() * 100 + '%';
-        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.animationDelay = Math.random() * 0.5 + 's';
-        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-        
-        // Random shapes
-        if (Math.random() > 0.5) {
-            confetti.style.borderRadius = '50%';
+        if (proximityCheck) {
+            document.removeEventListener('mousemove', checkProximity);
+            document.removeEventListener('touchmove', checkProximity, { passive: false });
         }
-        
-        container.appendChild(confetti);
-        
-        // Remove after animation
-        setTimeout(() => {
-            confetti.remove();
-        }, 3500);
     }
 }
 
-// Window resize handler
+noBtn.addEventListener('mouseenter', dodgeButton);
+noBtn.addEventListener('click', (e) => { e.preventDefault(); dodgeButton(); });
+noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); dodgeButton(); });
+
+document.addEventListener('mousemove', (e) => {
+    if (noDodgeCount >= noTexts.length) return;
+    const pos = getPointerPos(e);
+    const rect = noBtn.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    if (distance(pos, { x: cx, y: cy }) < PROXIMITY) {
+        if (!proximityCheck) {
+            proximityCheck = setInterval(() => {
+                moveNoButton();
+            }, MOVE_INTERVAL);
+        }
+    } else if (proximityCheck) {
+        clearInterval(proximityCheck);
+        proximityCheck = null;
+    }
+});
+
+document.addEventListener('touchmove', (e) => {
+    if (noDodgeCount >= noTexts.length) return;
+    const pos = getPointerPos(e);
+    const rect = noBtn.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    if (distance(pos, { x: cx, y: cy }) < PROXIMITY) {
+        e.preventDefault();
+        moveNoButton();
+    }
+}, { passive: false });
+
 window.addEventListener('resize', () => {
-    if (noDodgeCount > 0 && noBtn.style.position === 'fixed') {
-        moveButton();
-    }
+    if (noDodgeCount > 0 && noBtn.style.position === 'fixed') moveNoButton();
 });
 
-// Keyboard support
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && document.activeElement === yesBtn) {
-        yesBtn.click();
-    }
+    if (e.key === 'Enter' && document.activeElement === yesBtn) yesBtn.click();
 });
-
-console.log('💕 cottagecore valentine website loaded! 🌸');

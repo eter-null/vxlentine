@@ -3,170 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A special Valentine's proposal for Nazia Tabassum">
-    <title>💖 will u be my valentine?? 💖</title>
-    
-    <!-- Google Fonts - more playful ones -->
+    <title>for nazia 🌸💕</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fredoka:wght@400;600&family=Caveat:wght@600;700&family=Shadows+Into+Light&display=swap" rel="stylesheet">
-    
-    <!-- Canvas Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fredoka:wght@300;400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
-    <!-- Background Music Toggle -->
-    <button id="musicToggle" class="music-toggle">
-        🎵
-    </button>
-    
-    <!-- Audio Element -->
+    <!-- Floating decorations -->
+    <div class="floaties">
+        <img src="https://em-content.zobj.net/source/animated-noto-color-emoji/356/rabbit-face_1f430.gif" class="float float-1" alt="bunny">
+        <img src="https://em-content.zobj.net/source/animated-noto-color-emoji/356/teddy-bear_1f9f8.gif" class="float float-2" alt="teddy">
+        <img src="https://em-content.zobj.net/source/animated-noto-color-emoji/356/cherry-blossom_1f338.gif" class="float float-3" alt="flower">
+        <img src="https://em-content.zobj.net/source/animated-noto-color-emoji/356/sparkles_2728.gif" class="float float-4" alt="sparkles">
+        <img src="https://em-content.zobj.net/source/animated-noto-color-emoji/356/bouquet_1f490.gif" class="float float-5" alt="bouquet">
+        <img src="https://em-content.zobj.net/source/animated-noto-color-emoji/356/two-hearts_1f495.gif" class="float float-6" alt="hearts">
+    </div>
+
+    <!-- Record player -->
+    <div class="record-player">
+        <div class="turntable">
+            <div class="vinyl" id="vinyl">
+                <div class="vinyl-ring"></div>
+                <div class="record-label" id="albumCover">
+                    <img src="assets/music/ab67616d00001e022a059be8710649e1df1fe2f3.jpg" alt="album">
+                </div>
+            </div>
+            <div class="tonearm" id="tonearm"></div>
+        </div>
+        <div class="player-controls">
+            <div class="song-title">vxlentine — whatsaheart</div>
+            <button id="playPause" class="play-btn">▶</button>
+        </div>
+        <div class="now-playing-lyric" id="nowPlayingLyric">♪ (´｡• ᵕ •｡`) tap play ♪</div>
+    </div>
+
     <audio id="bgMusic" loop>
-        <source src="assets/music/background.mp3" type="audio/mpeg">
+        <source src="assets/music/SpotiDownloader.com - vxlentine - whatsaheart.mp3" type="audio/mpeg">
     </audio>
-    
-    <!-- Scattered decorative elements -->
-    <div class="deco-hearts">
-        <div class="float-heart" style="left: 5%; top: 10%; font-size: 30px;">💕</div>
-        <div class="float-heart" style="left: 85%; top: 15%; font-size: 25px;">💗</div>
-        <div class="float-heart" style="left: 10%; top: 70%; font-size: 35px;">💖</div>
-        <div class="float-heart" style="right: 10%; top: 60%; font-size: 28px;">💝</div>
-        <div class="float-heart" style="left: 50%; top: 5%; font-size: 20px;">✨</div>
-        <div class="float-heart" style="right: 5%; top: 85%; font-size: 32px;">💓</div>
-        <div class="float-heart" style="left: 15%; top: 40%; font-size: 22px;">🌟</div>
-        <div class="float-heart" style="right: 20%; top: 25%; font-size: 26px;">⭐</div>
-    </div>
-    
-    <!-- Main Container -->
-    <div id="mainContent" class="main-container">
-        <div class="content-wrapper">
+
+    <!-- Main content -->
+    <div class="container">
+        <div class="header-deco">
+            <img src="assets/gifs/207.gif" class="header-gif" alt="cute">
+        </div>
+
+        <h1 class="main-title">
+            <span class="sparkle">(◕‿◕)</span>
+            nazia tabassum
+            <span class="sparkle">(◕‿◕)</span>
+        </h1>
+
+        <div class="cute-box main-box">
+            <img src="assets/cute-cat-w-knife.jpg" class="cute-img" alt="cute cat">
             
-            <!-- Marquee header -->
-            <div class="marquee-container">
-                <marquee behavior="scroll" direction="left" scrollamount="5">
-                    💖 special question for a special person 💖 special question for a special person 💖
-                </marquee>
-            </div>
-            
-            <!-- Header with GIF -->
-            <div class="header-section">
-                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbTBxdWZ6OHl6Zm1wZjNkdHB4c3VzZGRyM3BxcDZyMnN4dHFxZHZ0NSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/7JQD2eBmQULZwQvG6O/giphy.gif" 
-                     alt="hearts" 
-                     class="header-gif wiggle">
-                
-                <h1 class="main-title">
-                    ✨ Nazia Tabassum ✨
-                </h1>
-                
-                <div class="subtitle-box">
-                    <p class="subtitle">hey so um...</p>
-                </div>
-            </div>
-            
-            <!-- Main Question with doodle border -->
-            <div class="question-box">
-                <div class="doodle-border">
-                    <h2 class="main-question">
-                        will you be my valentine?? 💕
-                    </h2>
-                    <p class="sub-question">
-                        (pls say yes this took effort lol)
-                    </p>
-                </div>
-            </div>
-            
-            <!-- GIF Decoration -->
-            <div class="center-gif-container">
-                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDZxbTJ4ZGwxbWJ4ZGd4eDRqNXBpb3NkdG1jZnJxNmQxdWt2YWRxbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/xUA7bcDdd7wWHU6gqk/giphy.gif" 
-                     alt="Love animation" 
-                     class="center-gif">
-            </div>
-            
-            <!-- Buttons Container -->
-            <div id="buttonsContainer" class="buttons-area">
-                
-                <!-- Yes Button -->
-                <button id="yesBtn" class="yes-button">
-                    YES!! 💕
-                </button>
-                
-                <!-- No Button -->
-                <button id="noBtn" class="no-button">
-                    no
-                </button>
-            </div>
-            
-            <!-- Encouraging Text -->
-            <p id="encourageText" class="encourage-text">
-                👀 psst... the no button is kinda sus
+            <p class="question">
+                will you be my valentine? (´• ω •`) ♡
             </p>
-            
-            <!-- Visitor counter (fake but fun) -->
-            <div class="visitor-counter">
-                <img src="https://stuff.charm.sh/counter.gif" alt="visitor counter" style="image-rendering: pixelated;">
-                <p style="margin-top: 5px; font-size: 12px;">u are visitor number ??? 💖</p>
+
+            <div class="buttons-container" id="buttonsArea">
+                <button class="yes-btn" id="yesBtn">
+                    yes!!! ヽ(♡‿♡)ノ
+                </button>
+                <button class="no-btn" id="noBtn">
+                    no... (´-ω-`)
+                </button>
             </div>
+
+            <p class="hint" id="hintText">
+                *psst... the no button is kinda shy* (￢‿￢ )
+            </p>
+        </div>
+
+        <img src="assets/gifs/Divider01.gif" class="divider-gif" alt="">
+        <div class="decoration-row">
+            <img src="assets/gifs/169.gif" class="deco-gif" alt="">
+            <img src="assets/gifs/201.gif" class="deco-gif" alt="">
+            <img src="assets/gifs/208.gif" class="deco-gif" alt="">
         </div>
     </div>
-    
-    <!-- Success Message (Hidden by default) -->
-    <div id="successMessage" class="success-page hidden">
+
+    <!-- Success page -->
+    <div class="success-page" id="successPage">
+        <div class="confetti-container" id="confettiCanvas"></div>
+        
         <div class="success-content">
+            <img src="assets/gifs/210.webp" class="big-gif" alt="celebration">
             
-            <!-- Animated marquee -->
-            <div class="success-marquee">
-                <marquee behavior="alternate" scrollamount="8">
-                    🎉 YAYYYY!!! 🎉 SHE SAID YES!! 🎉 BEST DAY EVER!! 🎉
-                </marquee>
-            </div>
+            <h2 class="yay-title">yaaaay!!! ＼(￣▽￣)／ ♡</h2>
             
-            <!-- Celebration GIF -->
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdGNwbjh5OHB4ZWt6Y3gxOHN5enM2dTh2bWh5bnNlY3Fhd3NwbXA0dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/l0MYt5jPR6QX5pnqM/giphy.gif" 
-                 alt="Celebration" 
-                 class="celebration-gif spin-on-load">
-            
-            <h2 class="success-title rainbow-text">
-                OMG YOU SAID YES!!!
-            </h2>
-            
-            <div class="success-message-box">
-                <p class="success-subtitle">
-                    ✨ u just made me the happiest person ever ✨
-                </p>
-                
-                <!-- Personal Message Section -->
-                <div class="personal-message">
-                    <p>
-                        okay so real talk... from the moment i met u, i knew u were different (in the best way possible). 
-                        ur smile literally makes my whole day better and ur laugh is like my favorite sound in the entire universe fr fr
-                    </p>
-                    <p>
-                        every second with u feels like those perfect movie moments except better because its REAL. 
-                        you make everything more fun just by existing and being ur amazing self
-                    </p>
-                    <p class="final-message">
-                        cant wait for all the memories were gonna make together!! 
-                        happy valentines day nazia!! 💕💕💕
-                    </p>
-                    <p style="text-align: right; margin-top: 20px; font-size: 18px;">
-                        - ur valentine 😊
-                    </p>
+            <div class="cute-box love-letter">
+                <div class="letter-header">
+                    <img src="assets/gifs/208.gif" class="small-gif" alt="">
+                    a little note for you (´｡• ω •｡`)
+                    <img src="assets/gifs/208.gif" class="small-gif" alt="">
                 </div>
                 
-                <!-- Additional GIF -->
-                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW4yYXVxbGV6cWt0enBhOXV3MHgxZmhxbXczaXJwODg3ZGZsODhodyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/kHU8W94VS329y/giphy.gif" 
-                     alt="Love" 
-                     class="bottom-gif bounce-animation">
+                <p class="love-text">
+                    every moment with you feels like a warm hug on a cozy day (๑˘︶˘๑)
+                </p>
+                <p class="love-text">
+                    your smile makes everything feel like sunshine and flowers ♡( ◡‿◡ )
+                </p>
+                <p class="love-text">
+                    i'm so lucky to know someone as wonderful as you (´ ω `♡)
+                </p>
+                <p class="love-text">
+                    happy valentine's day, nazia!! (⌒▽⌒)☆
+                </p>
+
+                <div class="signature">
+                    ~ (´꒳`)♡ with all my love ~
+                </div>
             </div>
-            
-            <!-- Blinking text -->
-            <p class="blink-text">💖 this is the beginning of something amazing 💖</p>
+
+            <img src="assets/gifs/207.gif" class="bottom-gif" alt="">
         </div>
     </div>
-    
+
     <script src="script.js"></script>
 </body>
 </html>

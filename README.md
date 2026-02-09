@@ -1,25 +1,25 @@
-# 💕 Valentine Proposal Website for Nazia Tabassum
+# 💖 valentine website for nazia tabassum 💖
 
-A romantic, interactive Valentine's Day proposal website with soft pastel aesthetics and creative Yes/No button interactions.
+a super fun and chaotic valentine proposal website with neocities vibes!! the no button literally runs away lmao
 
-## ✨ Features
+## ✨ features (aka the cool stuff)
 
-- **Interactive Yes/No Buttons**: The "No" button moves away, shrinks, and changes text with each dodge attempt
-- **Soft Pastel Design**: Pinterest-inspired color scheme with blush pink, lavender, and cream tones
-- **Confetti Celebration**: Multi-burst confetti animation when "Yes" is clicked
-- **Background Music**: Optional romantic background music with toggle control
-- **Personal Message**: Heartfelt message revealed after acceptance
-- **Floating Hearts**: Animated hearts floating in the background
-- **Mobile Responsive**: Fully optimized for mobile devices and tablets
-- **Smooth Animations**: Using Animate.css and custom CSS animations
+- **dodgy no button**: literally moves away when u try to click it lol
+- **neocities aesthetic**: bright colors, comic sans, marquee tags, the works!!
+- **confetti explosion**: SO MUCH CONFETTI when they say yes
+- **background music**: optional vibes (add ur own!)
+- **personal message**: wholesome stuff after they say yes
+- **floating emojis**: hearts n stars everywhere
+- **mobile friendly**: works on phones too!!
+- **chaotic energy**: wobbles, bounces, rainbow text, u name it
 
-## 🎨 Color Palette
+## 🎨 the vibe
 
-- **Blush Pink**: #FFB6C1
-- **Lavender**: #E6E6FA
-- **Soft Coral**: #FF9999
-- **Cream**: #FFF5EE
-- **Soft Charcoal**: #4A4A4A
+- bright pinks and pastels
+- comic sans (unironically)
+- hand-drawn aesthetic
+- early 2000s web nostalgia
+- chaotic but in a cute way
 
 ## 🚀 Quick Start
 

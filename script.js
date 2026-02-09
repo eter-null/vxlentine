@@ -209,10 +209,10 @@ function dodgeButton() {
         updateHint();
     } else {
         // Convert to yes button
-        noBtn.textContent = "YES!! ヽ(♡‿♡)ノ";
-        noBtn.style.background = 'linear-gradient(135deg, #FF69B4, #FFB6C1)';
-        noBtn.style.color = 'white';
-        noBtn.style.borderColor = '#FF1493';
+        noBtn.textContent = "YES!!";
+        noBtn.style.background = '#ff69b4';
+        noBtn.style.color = '#fff';
+        noBtn.style.borderColor = '#ff69b4';
         noBtn.removeEventListener('mouseenter', dodgeButton);
         noBtn.onclick = () => yesBtn.click();
     }

@@ -3,121 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>for nazia 🌸💕</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fredoka:wght@300;400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <title>~*~ for nazia ~*~</title>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');</style>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Floating decorations -->
-    <div class="floaties">
-        <img src="https://em-content.zobj.net/source/animated-noto-color-emoji/356/rabbit-face_1f430.gif" class="float float-1" alt="bunny">
-        <img src="https://em-content.zobj.net/source/animated-noto-color-emoji/356/teddy-bear_1f9f8.gif" class="float float-2" alt="teddy">
-        <img src="https://em-content.zobj.net/source/animated-noto-color-emoji/356/cherry-blossom_1f338.gif" class="float float-3" alt="flower">
-        <img src="https://em-content.zobj.net/source/animated-noto-color-emoji/356/sparkles_2728.gif" class="float float-4" alt="sparkles">
-        <img src="https://em-content.zobj.net/source/animated-noto-color-emoji/356/bouquet_1f490.gif" class="float float-5" alt="bouquet">
-        <img src="https://em-content.zobj.net/source/animated-noto-color-emoji/356/two-hearts_1f495.gif" class="float float-6" alt="hearts">
+    <div class="tiled-bg"></div>
+
+    <!-- neocities-style marquee -->
+    <div class="top-bar">
+        <marquee behavior="scroll" direction="left" scrollamount="4">
+            ~*~*~ welcome to my valentine page for nazia ~*~*~ bunnies and teddy bears and flowers ~*~*~
+        </marquee>
     </div>
 
-    <!-- Record player -->
-    <div class="record-player">
-        <div class="turntable">
+    <!-- music widget -->
+    <div class="music-widget">
+        <div class="widget-title">♪ now playing ♪</div>
+        <div class="record-wrap">
             <div class="vinyl" id="vinyl">
-                <div class="vinyl-ring"></div>
-                <div class="record-label" id="albumCover">
-                    <img src="assets/music/ab67616d00001e022a059be8710649e1df1fe2f3.jpg" alt="album">
+                <div class="vinyl-grooves"></div>
+                <div class="record-label">
+                    <img src="assets/music/ab67616d00001e022a059be8710649e1df1fe2f3.jpg" alt="">
                 </div>
             </div>
             <div class="tonearm" id="tonearm"></div>
         </div>
-        <div class="player-controls">
-            <div class="song-title">vxlentine — whatsaheart</div>
-            <button id="playPause" class="play-btn">▶</button>
-        </div>
-        <div class="now-playing-lyric" id="nowPlayingLyric">♪ (´｡• ᵕ •｡`) tap play ♪</div>
+        <div class="track-info">vxlentine — whatsaheart</div>
+        <button id="playPause" class="play-btn">▶ play</button>
+        <div class="now-lyric" id="nowPlayingLyric">(´｡• ᵕ •｡`) tap play</div>
     </div>
 
     <audio id="bgMusic" loop>
         <source src="assets/music/SpotiDownloader.com - vxlentine - whatsaheart.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Main content -->
-    <div class="container">
-        <div class="header-deco">
-            <img src="assets/gifs/207.gif" class="header-gif" alt="cute">
-        </div>
+    <!-- main page frame -->
+    <div class="page-frame">
+        <img src="assets/gifs/169.gif" class="corner corner-tl" alt="">
+        <img src="assets/gifs/201.gif" class="corner corner-tr" alt="">
+        <img src="assets/gifs/208.gif" class="corner corner-bl" alt="">
+        <img src="assets/gifs/207.gif" class="corner corner-br" alt="">
 
-        <h1 class="main-title">
-            <span class="sparkle">(◕‿◕)</span>
-            nazia tabassum
-            <span class="sparkle">(◕‿◕)</span>
-        </h1>
+        <div class="main-inner">
+            <h1 class="page-title">★ for nazia tabassum ★</h1>
 
-        <div class="cute-box main-box">
-            <img src="assets/cute-cat-w-knife.jpg" class="cute-img" alt="cute cat">
-            
-            <p class="question">
-                will you be my valentine? (´• ω •`) ♡
-            </p>
-
-            <div class="buttons-container" id="buttonsArea">
-                <button class="yes-btn" id="yesBtn">
-                    yes!!! ヽ(♡‿♡)ノ
-                </button>
-                <button class="no-btn" id="noBtn">
-                    no... (´-ω-`)
-                </button>
+            <div class="section-box">
+                <div class="section-header">🌸 the big question 🌸</div>
+                <img src="assets/cute-cat-w-knife.jpg" class="main-pic" alt="">
+                <p class="big-q">will you be my valentine?</p>
+                <div class="btn-wrap" id="buttonsArea">
+                    <button class="yes-btn" id="yesBtn">YES!!!</button>
+                    <button class="no-btn" id="noBtn">no...</button>
+                </div>
+                <p class="hint" id="hintText">(the no button is shy...)</p>
             </div>
 
-            <p class="hint" id="hintText">
-                *psst... the no button is kinda shy* (￢‿￢ )
-            </p>
-        </div>
-
-        <img src="assets/gifs/Divider01.gif" class="divider-gif" alt="">
-        <div class="decoration-row">
-            <img src="assets/gifs/169.gif" class="deco-gif" alt="">
-            <img src="assets/gifs/201.gif" class="deco-gif" alt="">
-            <img src="assets/gifs/208.gif" class="deco-gif" alt="">
+            <img src="assets/gifs/Divider01.gif" class="divider" alt="">
+            <div class="gif-row">
+                <img src="assets/gifs/169.gif" alt="">
+                <img src="assets/gifs/201.gif" alt="">
+                <img src="assets/gifs/208.gif" alt="">
+            </div>
         </div>
     </div>
 
-    <!-- Success page -->
-    <div class="success-page" id="successPage">
-        <div class="confetti-container" id="confettiCanvas"></div>
-        
-        <div class="success-content">
-            <img src="assets/gifs/210.webp" class="big-gif" alt="celebration">
-            
-            <h2 class="yay-title">yaaaay!!! ＼(￣▽￣)／ ♡</h2>
-            
-            <div class="cute-box love-letter">
-                <div class="letter-header">
-                    <img src="assets/gifs/208.gif" class="small-gif" alt="">
-                    a little note for you (´｡• ω •｡`)
-                    <img src="assets/gifs/208.gif" class="small-gif" alt="">
-                </div>
-                
-                <p class="love-text">
-                    every moment with you feels like a warm hug on a cozy day (๑˘︶˘๑)
-                </p>
-                <p class="love-text">
-                    your smile makes everything feel like sunshine and flowers ♡( ◡‿◡ )
-                </p>
-                <p class="love-text">
-                    i'm so lucky to know someone as wonderful as you (´ ω `♡)
-                </p>
-                <p class="love-text">
-                    happy valentine's day, nazia!! (⌒▽⌒)☆
-                </p>
-
-                <div class="signature">
-                    ~ (´꒳`)♡ with all my love ~
-                </div>
+    <!-- success overlay -->
+    <div class="success-overlay" id="successPage">
+        <div id="confettiCanvas"></div>
+        <div class="success-inner">
+            <img src="assets/gifs/210.webp" class="celebrate-pic" alt="">
+            <h2 class="yay">yaaaay!!!</h2>
+            <div class="letter-box">
+                <div class="letter-title">♡ a little note for you ♡</div>
+                <p>every moment with you feels like a warm hug on a cozy day</p>
+                <p>your smile makes everything feel like sunshine and flowers</p>
+                <p>im so lucky to know someone as wonderful as you</p>
+                <p>happy valentines day nazia!!</p>
+                <p class="signed">~ with all my love ~</p>
             </div>
-
-            <img src="assets/gifs/207.gif" class="bottom-gif" alt="">
+            <img src="assets/gifs/207.gif" class="bottom-pic" alt="">
         </div>
     </div>
 

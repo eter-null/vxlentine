@@ -176,8 +176,8 @@ yesBtn.addEventListener('click', () => {
     }, 400);
 });
 
-const PROXIMITY = 65;
-const MOVE_INTERVAL = 120;
+const PROXIMITY = 48;
+const MOVE_INTERVAL = 85;
 
 function getPointerPos(e) {
     if (e.touches && e.touches.length) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
@@ -225,7 +225,7 @@ function dodgeButton() {
     noDodgeCount++;
     if (noDodgeCount < noTexts.length) {
         noBtn.textContent = noTexts[noDodgeCount];
-        const scale = Math.max(0.25, 1 - noDodgeCount * 0.12);
+        const scale = Math.max(0.22, 1 - noDodgeCount * 0.14);
         noBtn.style.transform = 'scale(' + scale + ')';
         moveNoButton();
         const hints = [

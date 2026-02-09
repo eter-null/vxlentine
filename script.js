@@ -1,19 +1,35 @@
+/* ═══════════════════════════════════════
+   ~*~ neocities valentine script ~*~
+   ═══════════════════════════════════════ */
+
 let noDodgeCount = 0;
 let musicPlaying = false;
-let proximityCheck = null;
+let proximityLoop = null;
+let lastMousePos = { x: -9999, y: -9999 };
 
 const noTexts = [
     "no",
-    "nope",
-    "u sure?",
-    "really?",
-    "pls no",
-    "think again",
-    "pretty pls?",
-    "ill be sad",
-    "maybe later?",
-    "last chance",
-    "ok fine... yes!!"
+    "u sure??",
+    "really??",
+    "pls reconsider",
+    "think again!!",
+    "u cant click me",
+    "im too fast 4 u",
+    "hehe try again",
+    "nope nope nope",
+    "getting dizzy yet?",
+    "just give up lol",
+    "ok fine... YES!!"
+];
+
+const hintTexts = [
+    "( the no button is scared of u... )",
+    "( it RAN away omg )",
+    "( its literally impossible )",
+    "( u will never catch it )",
+    "( just press yes already!! )",
+    "( the button has superpowers )",
+    "( its mocking u... )"
 ];
 
 const yesBtn = document.getElementById('yesBtn');
@@ -24,9 +40,9 @@ const successPage = document.getElementById('successPage');
 const bgMusic = document.getElementById('bgMusic');
 const playPauseBtn = document.getElementById('playPause');
 const vinyl = document.getElementById('vinyl');
-const tonearm = document.getElementById('tonearm');
 const nowPlayingLyric = document.getElementById('nowPlayingLyric');
 
+/* ---- LYRICS SYNC ---- */
 const lrcRaw = `[00:11.08]Valentine, where did you go?
 [00:16.23]Ive been fiending for a minute
 [00:18.02]No i dont need forgiveness
@@ -112,15 +128,16 @@ function updateSyncedLyrics(t) {
     }
 }
 
+/* ---- MUSIC CONTROLS ---- */
 playPauseBtn.addEventListener('click', () => {
     if (musicPlaying) {
         bgMusic.pause();
-        playPauseBtn.textContent = '▶';
+        playPauseBtn.textContent = '▶ play';
         vinyl.classList.remove('spinning');
         musicPlaying = false;
     } else {
         bgMusic.play();
-        playPauseBtn.textContent = '❚❚';
+        playPauseBtn.textContent = '❚❚ pause';
         vinyl.classList.add('spinning');
         musicPlaying = true;
     }
@@ -135,170 +152,269 @@ function tryAutoplay() {
     if (p && typeof p.then === 'function') {
         p.then(() => {
             musicPlaying = true;
-            playPauseBtn.textContent = '❚❚';
+            playPauseBtn.textContent = '❚❚ pause';
             vinyl.classList.add('spinning');
         }).catch(() => {});
     }
 }
-tryAutoplay();
-document.addEventListener('DOMContentLoaded', () => {
-    tryAutoplay();
-    setTimeout(tryAutoplay, 400);
-    setTimeout(tryAutoplay, 1200);
-});
-window.addEventListener('load', tryAutoplay);
-document.addEventListener('click', () => { if (!musicPlaying) tryAutoplay(); }, { once: true });
-document.addEventListener('touchstart', () => { if (!musicPlaying) tryAutoplay(); }, { once: true });
 
+/* ---- SPLASH PAGE / CLICK TO ENTER ---- */
+const splashPage = document.getElementById('splashPage');
+const enterBtn = document.getElementById('enterBtn');
+
+enterBtn.addEventListener('click', () => {
+    splashPage.classList.add('hidden');
+    setTimeout(() => { splashPage.style.display = 'none'; }, 900);
+    // autoplay music on user interaction
+    tryAutoplay();
+});
+// also allow clicking anywhere on splash
+splashPage.addEventListener('click', (e) => {
+    if (e.target === splashPage || e.target.closest('.splash-inner')) {
+        splashPage.classList.add('hidden');
+        setTimeout(() => { splashPage.style.display = 'none'; }, 900);
+        tryAutoplay();
+    }
+});
+
+/* ---- YES BUTTON (success!) ---- */
 yesBtn.addEventListener('click', () => {
     const container = document.getElementById('confettiCanvas');
-    const colors = ['#ff69b4', '#ffb6c1', '#ffc0cb', '#dda0dd'];
-    for (let i = 0; i < 60; i++) {
+    const colors = ['#ff69b4', '#ffb6c1', '#ffc0cb', '#dda0dd', '#ff1493', '#e8b0ff'];
+    for (let i = 0; i < 80; i++) {
         const d = document.createElement('div');
         d.className = 'confetti-piece';
         d.style.left = Math.random() * 100 + '%';
         d.style.background = colors[Math.floor(Math.random() * colors.length)];
         d.style.animationDuration = (Math.random() * 1.5 + 1.5) + 's';
-        d.style.animationDelay = Math.random() * 0.3 + 's';
-        if (Math.random() > 0.5) d.style.borderRadius = '50%';
+        d.style.animationDelay = Math.random() * 0.4 + 's';
+        if (Math.random() > 0.4) d.style.borderRadius = '50%';
+        d.style.width = (Math.random() * 8 + 6) + 'px';
+        d.style.height = d.style.width;
         container.appendChild(d);
-        setTimeout(() => d.remove(), 3000);
+        setTimeout(() => d.remove(), 3500);
     }
     setTimeout(() => {
         successPage.classList.add('show');
         setTimeout(() => {
-            for (let i = 0; i < 40; i++) {
+            for (let i = 0; i < 50; i++) {
                 const d = document.createElement('div');
                 d.className = 'confetti-piece';
                 d.style.left = Math.random() * 100 + '%';
                 d.style.background = colors[Math.floor(Math.random() * colors.length)];
                 d.style.animationDuration = (Math.random() * 1.5 + 1.5) + 's';
                 container.appendChild(d);
-                setTimeout(() => d.remove(), 3000);
+                setTimeout(() => d.remove(), 3500);
             }
         }, 300);
     }, 400);
 });
 
-const PROXIMITY = 48;
-const MOVE_INTERVAL = 85;
+/* ═══════════════════════════════════════
+   NO BUTTON: ALMOST IMPOSSIBLE TO CATCH
+   - huge proximity detection (200px)
+   - instant teleport (no transition)
+   - continuous flee on mousemove
+   - random auto-teleport every 400ms when near
+   - shrinks dramatically
+   - moves to random spots aggressively
+   ═══════════════════════════════════════ */
+
+const FLEE_RADIUS = 120;  // start fleeing when mouse is this close
+const AUTO_FLEE_MS = 300; // check proximity every 300ms
 
 function getPointerPos(e) {
     if (e.touches && e.touches.length) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
     return { x: e.clientX, y: e.clientY };
 }
 
-function distance(a, b) {
+function dist(a, b) {
     return Math.hypot(a.x - b.x, a.y - b.y);
 }
 
 function moveNoButton() {
+    // smooth animated move to a random position away from mouse + yes btn
+    noBtn.classList.add('fleeing');
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-    const rect = noBtn.getBoundingClientRect();
-    const pad = 16;
-    const maxX = vw - rect.width - pad;
-    const maxY = vh - rect.height - pad;
-    let x = Math.random() * maxX;
-    let y = Math.random() * maxY;
+    const bw = noBtn.offsetWidth || 60;
+    const bh = noBtn.offsetHeight || 30;
+    const pad = 20;
+
     const yesRect = yesBtn.getBoundingClientRect();
-    const yesC = { x: yesRect.left + yesRect.width / 2, y: yesRect.top + yesRect.height / 2 };
-    for (let k = 0; k < 15; k++) {
-        const noC = { x: x + rect.width / 2, y: y + rect.height / 2 };
-        if (distance(noC, yesC) > 140) break;
-        x = Math.random() * maxX;
-        y = Math.random() * maxY;
+    const yesCenter = { x: yesRect.left + yesRect.width / 2, y: yesRect.top + yesRect.height / 2 };
+
+    let bestX = 0, bestY = 0, bestDist = 0;
+    for (let attempt = 0; attempt < 20; attempt++) {
+        const rx = pad + Math.random() * (vw - bw - pad * 2);
+        const ry = pad + Math.random() * (vh - bh - pad * 2);
+        const center = { x: rx + bw / 2, y: ry + bh / 2 };
+        const dMouse = dist(center, lastMousePos);
+        const dYes = dist(center, yesCenter);
+        const minD = Math.min(dMouse, dYes);
+        if (minD > bestDist) {
+            bestDist = minD;
+            bestX = rx;
+            bestY = ry;
+        }
     }
+
+    // use the CSS transition for smooth movement!
     noBtn.style.position = 'fixed';
-    noBtn.style.left = x + 'px';
-    noBtn.style.top = y + 'px';
+    noBtn.style.left = bestX + 'px';
+    noBtn.style.top = bestY + 'px';
 }
 
-function checkProximity(e) {
-    const pos = getPointerPos(e);
-    const rect = noBtn.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    if (distance(pos, { x: cx, y: cy }) < PROXIMITY) {
-        dodgeButton();
-        moveNoButton();
-    }
-}
-
-function dodgeButton() {
+function dodgeAndUpdate() {
     noDodgeCount++;
     if (noDodgeCount < noTexts.length) {
-        noBtn.textContent = noTexts[noDodgeCount];
-        const scale = Math.max(0.22, 1 - noDodgeCount * 0.14);
-        noBtn.style.transform = 'scale(' + scale + ')';
+        noBtn.textContent = noTexts[Math.min(noDodgeCount, noTexts.length - 1)];
+        // shrink playfully
+        const scale = Math.max(0.3, 1 - noDodgeCount * 0.1);
+        noBtn.style.setProperty('--no-scale', scale);
+        hintText.textContent = hintTexts[Math.min(noDodgeCount, hintTexts.length - 1)];
         moveNoButton();
-        const hints = [
-            '(the no button is shy...)',
-            '(it moved!!)',
-            '(getting smaller...)',
-            '(just say yes!!)',
-            '(yes is right there)',
-            '(please??)',
-            '(one more try)'
-        ];
-        hintText.textContent = hints[Math.min(noDodgeCount, hints.length - 1)];
     } else {
-        noBtn.textContent = 'yes!!';
-        noBtn.style.background = 'linear-gradient(180deg, #ff85b0, #ff69b4)';
+        // finally give in
+        noBtn.classList.remove('fleeing');
+        noBtn.textContent = 'YES!! ♡';
+        noBtn.style.background = 'linear-gradient(180deg, #ff85b0, #ff4d8a)';
         noBtn.style.color = '#fff';
-        noBtn.style.borderColor = '#d44d7a';
-        noBtn.style.transform = 'scale(1)';
-        noBtn.removeEventListener('mouseenter', dodgeButton);
+        noBtn.style.borderColor = '#b8336a';
+        noBtn.style.setProperty('--no-scale', '1');
+        noBtn.style.fontSize = '20px';
+        noBtn.style.padding = '10px 24px';
+        noBtn.style.animation = 'none';
         noBtn.onclick = () => yesBtn.click();
-        if (proximityCheck) {
-            document.removeEventListener('mousemove', checkProximity);
-            document.removeEventListener('touchmove', checkProximity, { passive: false });
-        }
+        stopFleeing();
     }
 }
 
-noBtn.addEventListener('mouseenter', dodgeButton);
-noBtn.addEventListener('click', (e) => { e.preventDefault(); dodgeButton(); });
-noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); dodgeButton(); });
+function stopFleeing() {
+    if (proximityLoop) {
+        clearInterval(proximityLoop);
+        proximityLoop = null;
+    }
+}
 
-document.addEventListener('mousemove', (e) => {
-    if (noDodgeCount >= noTexts.length) return;
-    const pos = getPointerPos(e);
-    const rect = noBtn.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    if (distance(pos, { x: cx, y: cy }) < PROXIMITY) {
-        if (!proximityCheck) {
-            proximityCheck = setInterval(() => {
-                moveNoButton();
-            }, MOVE_INTERVAL);
-        }
-    } else if (proximityCheck) {
-        clearInterval(proximityCheck);
-        proximityCheck = null;
+// on hover - dodge with smooth animation
+noBtn.addEventListener('mouseenter', (e) => {
+    if (noDodgeCount < noTexts.length) dodgeAndUpdate();
+});
+noBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (noDodgeCount >= noTexts.length) {
+        yesBtn.click();
+    } else {
+        dodgeAndUpdate();
     }
 });
-
-document.addEventListener('touchmove', (e) => {
-    if (noDodgeCount >= noTexts.length) return;
-    const pos = getPointerPos(e);
-    const rect = noBtn.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    if (distance(pos, { x: cx, y: cy }) < PROXIMITY) {
-        e.preventDefault();
-        moveNoButton();
+noBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (noDodgeCount >= noTexts.length) {
+        yesBtn.click();
+    } else {
+        // on mobile, dodge IMMEDIATELY when touched
+        dodgeAndUpdate();
+        // and also move right after to make it extra hard
+        setTimeout(() => {
+            if (noDodgeCount < noTexts.length) moveNoButton();
+        }, 150);
     }
 }, { passive: false });
 
-window.addEventListener('resize', () => {
-    if (noDodgeCount > 0 && noBtn.style.position === 'fixed') moveNoButton();
+// proximity check - flee when mouse/touch gets close (smooth slide away)
+function startProximityFlee() {
+    proximityLoop = setInterval(() => {
+        if (noDodgeCount >= noTexts.length) { stopFleeing(); return; }
+
+        const rect = noBtn.getBoundingClientRect();
+        const btnCenter = {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2
+        };
+        const d = dist(btnCenter, lastMousePos);
+
+        if (d < FLEE_RADIUS) {
+            moveNoButton(); // smooth slide away
+        }
+    }, AUTO_FLEE_MS);
+}
+
+// track mouse globally
+document.addEventListener('mousemove', (e) => {
+    lastMousePos = { x: e.clientX, y: e.clientY };
 });
 
+// track touch/finger position globally (MOBILE)
+document.addEventListener('touchstart', (e) => {
+    if (e.touches.length && e.target !== noBtn) {
+        lastMousePos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+}, { passive: true });
+
+document.addEventListener('touchmove', (e) => {
+    if (e.touches.length) {
+        lastMousePos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        
+        // check if touching near no button - flee!
+        if (noDodgeCount < noTexts.length) {
+            const rect = noBtn.getBoundingClientRect();
+            const btnCenter = {
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2
+            };
+            const d = dist(btnCenter, lastMousePos);
+            if (d < FLEE_RADIUS + 30) { // extra buffer for touch
+                e.preventDefault();
+                moveNoButton();
+            }
+        }
+    }
+}, { passive: false });
+
+// start the flee loop
+startProximityFlee();
+
+// also move on resize
+window.addEventListener('resize', () => {
+    if (noDodgeCount > 0 && noDodgeCount < noTexts.length) moveNoButton();
+});
+
+// keyboard shortcut
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && document.activeElement === yesBtn) yesBtn.click();
 });
 
+/* ---- FALLING HEARTS / STARS BACKGROUND ---- */
+(function() {
+    const container = document.getElementById('fallingStuff');
+    const items = ['♡', '✿', '❀', '♥', '✧', '☆', '❤', '✦'];
+    const colors = ['#ffb6c1', '#ff69b4', '#dda0dd', '#e8b0ff', '#ffc0cb', '#ff8ec4'];
+
+    function spawnFallingItem() {
+        const el = document.createElement('div');
+        el.className = 'falling-item';
+        el.textContent = items[Math.floor(Math.random() * items.length)];
+        el.style.left = Math.random() * 100 + '%';
+        el.style.color = colors[Math.floor(Math.random() * colors.length)];
+        el.style.fontSize = (12 + Math.random() * 18) + 'px';
+        el.style.animationDuration = (5 + Math.random() * 8) + 's';
+        el.style.animationDelay = Math.random() * 2 + 's';
+        container.appendChild(el);
+        setTimeout(() => el.remove(), 15000);
+    }
+
+    // spawn initial batch
+    for (let i = 0; i < 20; i++) {
+        setTimeout(spawnFallingItem, Math.random() * 3000);
+    }
+    // continuous spawning
+    setInterval(spawnFallingItem, 800);
+})();
+
+/* ---- SPARKLE CURSOR TRAIL ---- */
 (function() {
     const cursor = document.getElementById('customCursor');
     const trailContainer = document.getElementById('cursorTrail');
@@ -317,12 +433,13 @@ document.addEventListener('keydown', (e) => {
             dot.className = 'trail-dot';
             dot.style.left = mouseX + 'px';
             dot.style.top = mouseY + 'px';
-            const colors = ['#ffb6c1', '#ff69b4', '#ffc0cb', '#e6e6fa', '#fff0f5'];
-            const shade = colors[Math.floor(Math.random() * colors.length)];
+            const sparkleColors = ['#ffb6c1', '#ff69b4', '#ffc0cb', '#e8b0ff', '#fff0f5', '#ff8ec4'];
+            const shade = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
             dot.style.background = `radial-gradient(circle, ${shade} 0%, transparent 70%)`;
-            dot.style.boxShadow = `0 0 6px ${shade}, 0 0 10px rgba(255,255,255,0.6)`;
+            dot.style.boxShadow = `0 0 8px ${shade}, 0 0 14px rgba(255,255,255,0.7)`;
             trailContainer.appendChild(dot);
-            setTimeout(() => dot.remove(), 600);
+            setTimeout(() => dot.remove(), 700);
         }
     });
 })();
+

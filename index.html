@@ -2,21 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>for nazia ~*~</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>~*~ for nazia ~*~</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Short+Stack&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Patrick+Hand&family=Short+Stack&family=VT323&family=Silkscreen&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- ====== SPLASH / ENTER PAGE ====== -->
+    <div class="splash-page" id="splashPage">
+        <div class="splash-stars"></div>
+        <div class="splash-inner">
+            <img src="assets/gifs/starryline.gif" class="splash-star-line" alt="">
+            <div class="splash-row">
+                <img src="assets/gifs/bunnyleft.png" class="splash-bunny splash-bunny-l" alt="">
+                <div class="splash-center">
+                    <img src="assets/gifs/RWS_Tarot_06_Lovers.jpg" class="splash-tarot" alt="">
+                    <div class="splash-title pixel-text">~*~ a page 4 nazia ~*~</div>
+                    <img src="assets/gifs/Divider01.gif" class="splash-divider" alt="">
+                    <button class="splash-enter-btn" id="enterBtn">
+                        <img src="assets/gifs/bear.gif" class="splash-btn-gif" alt="">
+                        <span class="pixel-text">~ click 2 enter ~</span>
+                        <img src="assets/gifs/bunny2.gif" class="splash-btn-gif" alt="">
+                    </button>
+                </div>
+                <img src="assets/gifs/bunnyright.png" class="splash-bunny splash-bunny-r" alt="">
+            </div>
+            <img src="assets/gifs/starryline.gif" class="splash-star-line" alt="">
+            <div class="splash-stamps">
+                <img src="assets/gifs/be%20mine.gif" class="splash-mini-gif" alt="">
+                <img src="assets/gifs/be%20my%20sweetheart.gif" class="splash-mini-gif" alt="">
+                <img src="assets/gifs/in%20the%20name%20of%20love.gif" class="splash-mini-gif" alt="">
+            </div>
+        </div>
+    </div>
+
+    <!-- sparkle cursor -->
     <div id="customCursor" class="custom-cursor">
         <img src="assets/gifs/bunny2.gif" alt="">
     </div>
     <div id="cursorTrail" class="cursor-trail"></div>
-    <div class="bg-pattern"></div>
 
-    <!-- cinna on pony riding across with starry trail (trail behind her, screen-wide) -->
+    <!-- falling hearts bg -->
+    <div class="falling-stuff" id="fallingStuff"></div>
+
+    <!-- top marquee -->
+    <div class="marquee-bar top-marquee">
+        <div class="marquee-content">
+            <span>♡ u r my favorite person ♡</span>
+            <img src="assets/gifs/starryline.gif" class="marquee-star" alt="">
+            <span>✿ happy valentines day ✿</span>
+            <img src="assets/gifs/starryline.gif" class="marquee-star" alt="">
+            <span>♡ nazia tabassum ♡</span>
+            <img src="assets/gifs/starryline.gif" class="marquee-star" alt="">
+            <span>❀ be my valentine ❀</span>
+            <img src="assets/gifs/starryline.gif" class="marquee-star" alt="">
+            <span>♡ u r my favorite person ♡</span>
+            <img src="assets/gifs/starryline.gif" class="marquee-star" alt="">
+            <span>✿ happy valentines day ✿</span>
+            <img src="assets/gifs/starryline.gif" class="marquee-star" alt="">
+            <span>♡ nazia tabassum ♡</span>
+            <img src="assets/gifs/starryline.gif" class="marquee-star" alt="">
+            <span>❀ be my valentine ❀</span>
+            <img src="assets/gifs/starryline.gif" class="marquee-star" alt="">
+        </div>
+    </div>
+
+    <!-- cinna riding across -->
     <div class="ride-across">
         <img src="assets/gifs/cinna%20love.gif" class="ride-cinna" alt="">
         <div class="ride-trail">
@@ -43,82 +96,139 @@
         </div>
     </div>
 
-    <!-- record player -->
-    <div class="record-player">
-        <div class="turntable">
-            <div class="vinyl" id="vinyl">
-                <div class="vinyl-ring"></div>
-                <div class="record-label">
+    <!-- cd player / record player -->
+    <div class="cd-player-box">
+        <div class="cd-player-title blinky">now playing ~</div>
+        <div class="cd-case">
+            <div class="cd-disc" id="vinyl">
+                <div class="cd-ring"></div>
+                <div class="cd-cover">
                     <img src="assets/music/ab67616d00001e022a059be8710649e1df1fe2f3.jpg" alt="">
                 </div>
             </div>
-            <div class="tonearm" id="tonearm"></div>
         </div>
-        <div class="player-controls">
-            <span class="song-title">vxlentine — whatsaheart</span>
-            <button id="playPause" class="play-btn">▶</button>
+        <div class="cd-controls">
+            <span class="cd-song-name">vxlentine — whatsaheart</span>
+            <button id="playPause" class="cd-play-btn">▶ play</button>
         </div>
-        <div class="now-playing-lyric" id="nowPlayingLyric">♪ tap play ♪</div>
+        <div class="cd-lyric-box" id="nowPlayingLyric">♪ tap play ♪</div>
+        <img src="assets/gifs/cinna%20music.gif" class="cd-cinna" alt="">
     </div>
 
-    <audio id="bgMusic" loop autoplay preload="auto">
+    <audio id="bgMusic" loop>
         <source src="assets/music/SpotiDownloader.com - vxlentine - whatsaheart.mp3" type="audio/mpeg">
     </audio>
 
-    <aside class="side side-l">
-        <img src="assets/gifs/bear.gif" class="side-gif" alt="">
-        <img src="assets/gifs/be%20my%20sweetheart.gif" class="side-gif" alt="">
-    </aside>
-    <aside class="side side-r">
-        <img src="assets/gifs/be%20my%20teddy%20bear.webp" class="side-gif" alt="">
-        <img src="assets/gifs/in%20the%20name%20of%20love.gif" class="side-gif" alt="">
-    </aside>
-
-    <div class="page">
-        <img src="assets/gifs/cupid_left.gif" class="corner-deco corner-l" alt="">
-        <img src="assets/gifs/cupid_right.gif" class="corner-deco corner-r" alt="">
-
-        <div class="header-bit">
-            <img src="assets/gifs/blackmirror.gif" class="header-gif-top" alt="">
-        </div>
-
-        <h1 class="main-title">nazia tabassum</h1>
-
-        <img src="assets/gifs/be%20mine.gif" class="inline-gif gif-1" alt="">
-
-        <div class="cute-box-wrap">
-            <div class="cute-box">
-                <img src="assets/gifs/gif_ovalbunnies.gif" class="corner-bunny" alt="">
-                <img src="assets/cute-cat-w-knife.jpg" class="main-pic" alt="">
-            <p class="question">will you be my valentine?</p>
-
-            <div class="btn-wrap" id="buttonsArea">
-                <button class="yes-btn" id="yesBtn">yes!!!</button>
-                <button class="no-btn" id="noBtn">no</button>
-            </div>
-
-            <p class="hint" id="hintText">(the no button is shy...)</p>
-            </div>
-        </div>
-
-        <img src="assets/gifs/Divider01.gif" class="divider" alt="">
+    <!-- left side deco -->
+    <div class="side-deco side-left">
+        <img src="assets/gifs/bear.gif" class="deco-img" alt="">
+        <img src="assets/gifs/be%20my%20sweetheart.gif" class="deco-img" alt="">
     </div>
 
-    <!-- success -->
+    <!-- right side deco -->
+    <div class="side-deco side-right">
+        <img src="assets/gifs/be%20my%20teddy%20bear.webp" class="deco-img" alt="">
+        <img src="assets/gifs/in%20the%20name%20of%20love.gif" class="deco-img" alt="">
+    </div>
+
+    <!-- main page content -->
+    <div class="neo-page">
+        <!-- cupids top corners -->
+        <img src="assets/gifs/cupid_left.gif" class="cupid-corner left" alt="">
+        <img src="assets/gifs/cupid_right.gif" class="cupid-corner right" alt="">
+        
+        <!-- sparkle border table - neocities style -->
+        <div class="neo-container">
+            <!-- top deco bar -->
+            <div class="deco-bar">
+                <img src="assets/gifs/Divider01.gif" class="full-divider" alt="">
+            </div>
+
+            <div class="welcome-box">
+                <img src="assets/gifs/blackmirror.gif" class="welcome-gif" alt="">
+                <div class="blinky pixel-text title-glow">~* welcome 2 nazia's page *~</div>
+            </div>
+
+            <h1 class="neo-title">
+                <span class="letter-bounce">n</span><span class="letter-bounce">a</span><span class="letter-bounce">z</span><span class="letter-bounce">i</span><span class="letter-bounce">a</span>
+                <span class="letter-bounce"> </span>
+                <span class="letter-bounce">t</span><span class="letter-bounce">a</span><span class="letter-bounce">b</span><span class="letter-bounce">a</span><span class="letter-bounce">s</span><span class="letter-bounce">s</span><span class="letter-bounce">u</span><span class="letter-bounce">m</span>
+            </h1>
+
+            <img src="assets/gifs/be%20mine.gif" class="inline-deco" alt="">
+
+            <!-- the question box -->
+            <div class="question-frame">
+                <div class="frame-corner tl">✿</div>
+                <div class="frame-corner tr">✿</div>
+                <div class="frame-corner bl">✿</div>
+                <div class="frame-corner br">✿</div>
+
+                <img src="assets/gifs/gif_ovalbunnies.gif" class="bunnies-deco" alt="">
+
+                <img src="assets/cute-cat-w-knife.jpg" class="main-pic" alt="">
+
+                <p class="question-text blinky">will u be my valentine??? ♡</p>
+
+                <div class="btn-area" id="buttonsArea">
+                    <button class="yes-btn" id="yesBtn">
+                        YES!!! ♡
+                    </button>
+                    <button class="no-btn" id="noBtn">no</button>
+                </div>
+
+                <p class="hint-text" id="hintText">( the no button is scared of u... )</p>
+            </div>
+
+            <!-- bottom deco -->
+            <div class="deco-bar">
+                <img src="assets/gifs/Divider01.gif" class="full-divider" alt="">
+            </div>
+
+            <!-- neocities stamps area -->
+            <div class="stamps-row">
+                <div class="stamp">made w/ luv</div>
+                <div class="stamp">valentine 2026</div>
+                <div class="stamp">♡ 4ever ♡</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- bottom marquee -->
+    <div class="marquee-bar bottom-marquee">
+        <div class="marquee-content marquee-reverse">
+            <span>♡♡♡</span>
+            <span>i like u so much its annoying</span>
+            <span>♡♡♡</span>
+            <span>ur literally the cutest</span>
+            <span>♡♡♡</span>
+            <span>i like u so much its annoying</span>
+            <span>♡♡♡</span>
+            <span>ur literally the cutest</span>
+            <span>♡♡♡</span>
+        </div>
+    </div>
+
+    <!-- ====== SUCCESS PAGE ====== -->
     <div class="success-page" id="successPage">
         <div class="confetti-zone" id="confettiCanvas"></div>
         <div class="success-inner">
-            <img src="assets/gifs/my_valentine.png" class="success-gif" alt="">
-            <h2 class="yay">yaaaay!!!</h2>
-            <div class="cute-box letter-box">
-                <p class="letter-title">a little note for you</p>
-                <p class="letter">every moment with you feels like a warm hug on a cozy day</p>
-                <p class="letter">your smile makes everything sunshine and flowers</p>
-                <p class="letter">im so lucky to know someone as wonderful as you</p>
-                <p class="letter">happy valentines day nazia!!</p>
-                <p class="signed">~ with all my love ~</p>
+            <img src="assets/gifs/nazia.jpg" class="success-img" alt="">
+            <h2 class="yay-title blinky">~*~ YAAAAY ~*~</h2>
+            <div class="letter-frame">
+                <img src="assets/gifs/my_valentine.png" class="letter-stamp" alt="">
+                <div class="frame-corner tl">♡</div>
+                <div class="frame-corner tr">♡</div>
+                <div class="frame-corner bl">♡</div>
+                <div class="frame-corner br">♡</div>
+                <p class="letter-head pixel-text">a little note 4 u :</p>
+                <p class="letter-line">every moment with u feels like a warm hug on a cozy day</p>
+                <p class="letter-line">ur smile makes everything sunshine n flowers</p>
+                <p class="letter-line">im so lucky 2 know someone as wonderful as u</p>
+                <p class="letter-line">happy valentines day nazia!! ♡♡</p>
+                <p class="letter-sign">~ with all my love ~</p>
             </div>
-            <img src="assets/gifs/are%20you%20freaky.gif" class="success-gif-bottom" alt="">
+            <img src="assets/gifs/are%20you%20freaky.gif" class="success-bottom-gif" alt="">
         </div>
     </div>
 

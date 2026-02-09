@@ -744,8 +744,8 @@ body a, body button { cursor: none; }
 
 .letter-stamp {
     position: absolute;
-    bottom: -25px;
-    right: -20px;
+    bottom: -30px;
+    right: -55px;
     width: 160px;
     height: auto;
     object-fit: contain;
@@ -786,6 +786,18 @@ body a, body button { cursor: none; }
     color: #b8336a;
     text-align: center;
     margin-top: 18px;
+    font-style: italic;
+}
+
+.letter-ps {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 14px;
+    color: #8b5a6b;
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 0;
+    margin-right: auto;
+    max-width: 75%;
     font-style: italic;
 }
 

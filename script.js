@@ -196,6 +196,9 @@ yesBtn.addEventListener('click', () => {
     }
     setTimeout(() => {
         successPage.classList.add('show');
+        // hide the no button
+        noBtn.style.display = 'none';
+        stopFleeing();
         setTimeout(() => {
             for (let i = 0; i < 50; i++) {
                 const d = document.createElement('div');
@@ -233,7 +236,10 @@ function dist(a, b) {
 }
 
 function moveNoButton() {
-    // smooth animated move to a random position away from mouse + yes btn
+    // move button to body so it escapes parent stacking context
+    if (noBtn.parentElement !== document.body) {
+        document.body.appendChild(noBtn);
+    }
     noBtn.classList.add('fleeing');
     const vw = window.innerWidth;
     const vh = window.innerHeight;
@@ -261,6 +267,7 @@ function moveNoButton() {
 
     // use the CSS transition for smooth movement!
     noBtn.style.position = 'fixed';
+    noBtn.style.zIndex = '99998';
     noBtn.style.left = bestX + 'px';
     noBtn.style.top = bestY + 'px';
 }

@@ -141,7 +141,11 @@ function tryAutoplay() {
     }
 }
 tryAutoplay();
-document.addEventListener('DOMContentLoaded', tryAutoplay);
+document.addEventListener('DOMContentLoaded', () => {
+    tryAutoplay();
+    setTimeout(tryAutoplay, 400);
+    setTimeout(tryAutoplay, 1200);
+});
 window.addEventListener('load', tryAutoplay);
 document.addEventListener('click', () => { if (!musicPlaying) tryAutoplay(); }, { once: true });
 document.addEventListener('touchstart', () => { if (!musicPlaying) tryAutoplay(); }, { once: true });
@@ -294,3 +298,31 @@ window.addEventListener('resize', () => {
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && document.activeElement === yesBtn) yesBtn.click();
 });
+
+(function() {
+    const cursor = document.getElementById('customCursor');
+    const trailContainer = document.getElementById('cursorTrail');
+    let mouseX = -999, mouseY = -999;
+    let trailTick = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top = mouseY + 'px';
+
+        trailTick++;
+        if (trailTick % 2 === 0) {
+            const dot = document.createElement('div');
+            dot.className = 'trail-dot';
+            dot.style.left = mouseX + 'px';
+            dot.style.top = mouseY + 'px';
+            const colors = ['#ffb6c1', '#ff69b4', '#ffc0cb', '#e6e6fa', '#fff0f5'];
+            const shade = colors[Math.floor(Math.random() * colors.length)];
+            dot.style.background = `radial-gradient(circle, ${shade} 0%, transparent 70%)`;
+            dot.style.boxShadow = `0 0 6px ${shade}, 0 0 10px rgba(255,255,255,0.6)`;
+            trailContainer.appendChild(dot);
+            setTimeout(() => dot.remove(), 600);
+        }
+    });
+})();

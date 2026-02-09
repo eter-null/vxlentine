@@ -1,0 +1,326 @@
+/* Custom Tailwind Configuration */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Root Variables */
+:root {
+    --blush-pink: #FFB6C1;
+    --lavender: #E6E6FA;
+    --soft-coral: #FF9999;
+    --cream: #FFF5EE;
+    --soft-charcoal: #4A4A4A;
+    --rose: #FFE4E1;
+}
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, 
+        #FFE4E1 0%,
+        #E6E6FA 25%, 
+        #FFB6C1 50%, 
+        #E6E6FA 75%, 
+        #FFF5EE 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Gradient Animation */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Floating Hearts Background */
+.hearts-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.heart {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.3;
+    animation: float 20s ease-in-out infinite;
+}
+
+.heart-1 {
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.heart-2 {
+    left: 25%;
+    animation-delay: 2s;
+    animation-duration: 22s;
+}
+
+.heart-3 {
+    left: 45%;
+    animation-delay: 4s;
+    animation-duration: 20s;
+}
+
+.heart-4 {
+    left: 65%;
+    animation-delay: 1s;
+    animation-duration: 19s;
+}
+
+.heart-5 {
+    left: 80%;
+    animation-delay: 3s;
+    animation-duration: 21s;
+}
+
+.heart-6 {
+    left: 90%;
+    animation-delay: 5s;
+    animation-duration: 23s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.3;
+    }
+    90% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Main Content */
+#mainContent {
+    position: relative;
+    z-index: 10;
+}
+
+/* Yes Button Styling */
+.yes-button {
+    background: linear-gradient(135deg, #FF9999, #FFB6C1, #FF69B4);
+    color: white;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    min-width: 180px;
+}
+
+.yes-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.yes-button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.yes-button:hover {
+    box-shadow: 0 0 30px rgba(255, 105, 180, 0.6);
+}
+
+/* No Button Styling */
+.no-button {
+    background: linear-gradient(135deg, #E6E6FA, #D8BFD8);
+    color: var(--soft-charcoal);
+    border: 2px solid rgba(230, 230, 250, 0.5);
+    cursor: pointer;
+    position: absolute;
+    min-width: 150px;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.no-button:hover {
+    background: linear-gradient(135deg, #D8BFD8, #DDA0DD);
+}
+
+/* Button shrinking animation */
+.no-button.shrinking {
+    animation: shrink 0.5s ease-out forwards;
+}
+
+@keyframes shrink {
+    to {
+        transform: scale(0.9);
+    }
+}
+
+/* Music Toggle Button */
+#musicToggle {
+    transition: all 0.3s ease;
+}
+
+#musicToggle:hover {
+    background: rgba(255, 182, 193, 0.9);
+}
+
+#musicToggle.playing {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Success Message */
+#successMessage {
+    animation-duration: 1s;
+}
+
+#successMessage .bg-white\/70 {
+    animation: slideInUp 0.8s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .heart {
+        font-size: 1.5rem;
+    }
+    
+    h1 {
+        font-size: 2.5rem !important;
+    }
+    
+    .yes-button,
+    .no-button {
+        font-size: 1.2rem !important;
+        padding: 0.75rem 2rem !important;
+        min-width: 140px;
+    }
+    
+    #successMessage h2 {
+        font-size: 3rem !important;
+    }
+    
+    #successMessage p {
+        font-size: 1rem !important;
+    }
+}
+
+/* Ensure buttons stay within viewport */
+#buttonsContainer {
+    position: relative;
+}
+
+/* Add sparkle effect */
+@keyframes sparkle {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.sparkle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* Loading animation */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Smooth transitions for all elements */
+* {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 228, 225, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #FFB6C1, #E6E6FA);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #FF69B4, #DDA0DD);
+}
+
+/* Image hover effects */
+img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 20px 40px rgba(255, 105, 180, 0.3);
+}
+
+/* Text selection styling */
+::selection {
+    background: rgba(255, 182, 193, 0.5);
+    color: var(--soft-charcoal);
+}
+
+::-moz-selection {
+    background: rgba(255, 182, 193, 0.5);
+    color: var(--soft-charcoal);
+}

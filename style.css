@@ -742,6 +742,16 @@ body a, body button { cursor: none; }
     animation: glowPulse 2s ease-in-out infinite, twinkle 1.5s ease-in-out infinite;
 }
 
+.letter-bowtie {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 72px;
+    height: auto;
+    object-fit: contain;
+    z-index: 2;
+}
+
 .letter-stamp {
     position: absolute;
     bottom: -30px;

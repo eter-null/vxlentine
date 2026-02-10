@@ -769,6 +769,15 @@ body a, body button { cursor: none; }
     animation: glowPulse 2s ease-in-out infinite, twinkle 1.5s ease-in-out infinite;
 }
 
+.success-pocky {
+    display: block;
+    max-width: 140px;
+    width: auto;
+    height: auto;
+    margin: 0 auto 16px;
+    object-fit: contain;
+}
+
 .letter-bowtie {
     position: absolute;
     top: -20px;

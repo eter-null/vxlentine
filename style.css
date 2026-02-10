@@ -707,6 +707,33 @@ body a, body button { cursor: none; }
 }
 .success-page.show { display: block; }
 
+.success-side-deco {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 140px;
+    max-width: 28vw;
+    pointer-events: none;
+    z-index: 1002;
+}
+.success-side-left { left: 48px; }
+.success-side-right { right: 48px; }
+
+.success-deco-img {
+    position: absolute;
+    max-width: 100%;
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+}
+.success-deco-small {
+    width: 52px;
+    image-rendering: auto;
+}
+.success-side-left .deco-tilt-1 { top: 14%; left: 0; transform: rotate(-12deg); }
+.success-side-left .deco-tilt-2 { top: 54%; left: 150px; transform: rotate(8deg); }
+.success-side-right .deco-tilt-3 { top: 22%; right: 0; left: auto; transform: rotate(10deg); }
+
 .confetti-zone {
     position: fixed;
     inset: 0;
@@ -749,6 +776,27 @@ body a, body button { cursor: none; }
     width: 72px;
     height: auto;
     object-fit: contain;
+    z-index: 2;
+}
+
+.letter-corner-tr {
+    position: absolute;
+    top: -5px;
+    right: -16px;
+    width: 80px;
+    height: auto;
+    object-fit: contain;
+    z-index: 2;
+}
+
+.letter-flowers {
+    position: absolute;
+    top: 65%;
+    right: -95px;
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+    transform: translateY(-50%) rotate(-8deg);
     z-index: 2;
 }
 
@@ -851,7 +899,10 @@ body a, body button { cursor: none; }
     .ride-cinna { width: 70px; }
     .ride-trail img { width: 70px; }
     /* so success content isn’t covered by the in-flow player when it stacks on top */
-    .success-inner { padding-top: 160px; }    
+    .success-inner { padding-top: 160px; }
+    .success-side-deco { width: 90px; }
+    .success-deco-img { width: 70px; }
+    .letter-flowers { display: none; }
     /* Mobile no button - bigger touch target */
     .no-btn {
         font-size: 18px;
@@ -883,6 +934,7 @@ body a, body button { cursor: none; }
     .cd-controls { flex-wrap: wrap; justify-content: center; gap: 6px; }
     .cd-song-name { font-size: 12px; }
     .success-inner { padding-top: 120px; }
+    .success-side-deco { display: none; }
     .cd-play-btn { font-size: 13px; padding: 6px 14px; min-height: 36px; }
 }
 @media (max-width: 360px) {

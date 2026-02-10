@@ -25,7 +25,7 @@ const noTexts = [
 const hintTexts = [
     "( the no button is scared of u... )",
     "( it RAN away omg )",
-    "( just give up )",
+    "( its literally impossible )",
     "( u will never catch it )",
     "( just press yes already!! )",
     "( the button has superpowers )",

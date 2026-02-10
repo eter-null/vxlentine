@@ -731,7 +731,7 @@ body a, body button { cursor: none; }
     image-rendering: auto;
 }
 .success-side-left .deco-tilt-1 { top: 14%; left: 0; transform: rotate(-12deg); }
-.success-side-left .deco-tilt-2 { top: 54%; left: 150px; transform: rotate(8deg); }
+.success-side-left .deco-tilt-2 { top: 54%; left: 40px; transform: rotate(8deg); }
 .success-side-right .deco-tilt-3 { top: 22%; right: 0; left: auto; transform: rotate(10deg); }
 
 .confetti-zone {
@@ -769,15 +769,6 @@ body a, body button { cursor: none; }
     animation: glowPulse 2s ease-in-out infinite, twinkle 1.5s ease-in-out infinite;
 }
 
-.success-pocky {
-    display: block;
-    max-width: 140px;
-    width: auto;
-    height: auto;
-    margin: 0 auto 16px;
-    object-fit: contain;
-}
-
 .letter-bowtie {
     position: absolute;
     top: -20px;
@@ -795,6 +786,17 @@ body a, body button { cursor: none; }
     width: 80px;
     height: auto;
     object-fit: contain;
+    z-index: 2;
+}
+
+.letter-pocky {
+    position: absolute;
+    bottom: 35%;
+    left: -250px;
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+    transform: rotate(-18deg);
     z-index: 2;
 }
 
@@ -912,6 +914,7 @@ body a, body button { cursor: none; }
     .success-side-deco { width: 90px; }
     .success-deco-img { width: 70px; }
     .letter-flowers { display: none; }
+    .letter-pocky { display: none; }
     /* Mobile no button - bigger touch target */
     .no-btn {
         font-size: 18px;

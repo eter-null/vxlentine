@@ -23,7 +23,7 @@ const noTexts = [
 ];
 
 const hintTexts = [
-    "( the no button is scared of u... )",
+    "( the no button is shy, jst like u... )",
     "( it RAN away omg )",
     "( its literally impossible )",
     "( u will never catch it )",
